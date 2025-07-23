@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { mockUsers } from "../assets/examplelogin";
+import { useEffect } from "react";
 function useLogin() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -10,12 +11,11 @@ function useLogin() {
     const [emailValid, setEmailValid] = useState(false);
     const [passwordValid, setPasswordValid] = useState(false);
     const [passwordStrength, setPasswordStrength] = useState(0);
-    // Real-time validation
     function validateEmail(email) {
         return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
     }
     function validatePassword(password) {
-        return password.length >= 8 && /[a-zA-Z]/.test(password) && /\d/.test(password);
+        return /^(?=.*[!@#$%^&*(){}[\]:;"'<>,.?~`\\|+=-])(?=.*[A-Za-z])(?=.*[!@#$%^&*(){}[\]:;"'<>,.?~`\\|+=-])[A-Za-z\d!@#$%^&*(){}[\]:;"'<>,.?~`\\|+=-]{8,}$/.test(password);
     }
     function getPasswordStrength(password) {
         if (password.length < 8)
@@ -52,6 +52,26 @@ function useLogin() {
             }
         }, 1200);
     }
+    // This useEffect is crucial for validating and updating login state
+    useEffect(() => {
+        // These lines calculate the validation and strength
+        const isEmailValid = validateEmail(username);
+        const isPasswordValid = validatePassword(password);
+        const currentPasswordStrength = getPasswordStrength(password);
+        // These lines update the state variables that your LoginForm component uses
+        setEmailValid(isEmailValid);
+        setPasswordValid(isPasswordValid);
+        setPasswordStrength(currentPasswordStrength);
+        // This line enables/disables the login button
+        setLoginEnabled(isEmailValid && isPasswordValid);
+        // You can keep these console logs for debugging, but they aren't the issue
+        console.log("Username:", username);
+        console.log("Password:", password);
+        console.log("Email Valid (derived):", isEmailValid);
+        console.log("Password Valid (derived):", isPasswordValid);
+        console.log("Password Strength (derived):", currentPasswordStrength);
+        console.log("Login Enabled (derived):", isEmailValid && isPasswordValid);
+    }, [username, password]); // This ensures the effect runs whenever username or password changes
     return {
         validateEmail,
         validatePassword,
@@ -60,11 +80,15 @@ function useLogin() {
         password, setPassword,
         rememberMe, setRememberMe,
         showPassword, setShowPassword,
-        loginEnabled, setLoginEnabled,
+        loginEnabled, // now correctly updated
+        setLoginEnabled, // might not need to export if only updated internally
         loading, setLoading,
-        emailValid, setEmailValid,
-        passwordValid, setPasswordValid,
-        passwordStrength, setPasswordStrength,
+        emailValid, // now correctly updated
+        setEmailValid, // might not need to export
+        passwordValid, // now correctly updated
+        setPasswordValid, // might not need to export
+        passwordStrength, // now correctly updated
+        setPasswordStrength, // might not need to export
         handleSubmit
     };
 }

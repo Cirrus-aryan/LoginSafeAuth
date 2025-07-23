@@ -129,7 +129,7 @@ describe('LoginForm Dynamic Input Validation', () => {
         // Updated and more robust email validation logic for mocks
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         mockedHook.emailValid = emailRegex.test(username);
-        mockedHook.passwordValid = password.length >= 8 && /[a-zA-Z]/.test(password) && /\d/.test(password);
+        mockedHook.passwordValid = password.length >= 8 && /^(?=.*[!@#$%^&*(){}[\]:;"'<>,.?~`\\|+=-])(?=.*[A-Za-z])(?=.*[!@#$%^&*(){}[\]:;"'<>,.?~`\\|+=-])[A-Za-z\d!@#$%^&*(){}[\]:;"'<>,.?~`\\|+=-]{8,}$/.test(password) && /\d/.test(password);
         // loginEnabled should be false if either email or password is not valid
         mockedHook.loginEnabled = mockedHook.emailValid && mockedHook.passwordValid;
         render(_jsx(LoginForm, {}));

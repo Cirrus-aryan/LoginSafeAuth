@@ -1,5 +1,4 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-// src/components/LoginForm.tsx
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -15,7 +14,7 @@ import Tooltip from "@mui/material/Tooltip";
 import useLogin from "../customhooks/useLogin";
 function LoginForm() {
     const { username, setUsername, password, setPassword, rememberMe, setRememberMe, showPassword, setShowPassword, loginEnabled, loading, emailValid, passwordValid, passwordStrength, handleSubmit, } = useLogin();
-    return (_jsxs("form", { className: "flex flex-col items-center bg-white justify-center min-w-[20vw] h-full w-full rounded-2xl p-8 gap-4", onSubmit: handleSubmit, "data-testid": "login-form", autoComplete: "off", children: [_jsx(TextField, { label: "Username (Email)", variant: "standard", type: "email", value: username, onChange: (e) => setUsername(e.target.value), error: !!username && !emailValid, helperText: !!username && !emailValid ? "Enter a valid email address" : " ", fullWidth: true }), _jsx(Tooltip, { title: password
+    return (_jsxs("form", { className: "flex flex-col items-center bg-white justify-center min-w-[20vw] h-full w-full rounded-2xl p-8 gap-4", onSubmit: handleSubmit, "data-testid": "login-form", autoComplete: "off", children: [_jsx(TextField, { label: "Username (Email)", variant: "standard", type: "email", value: username, onChange: (e) => setUsername(e.target.value), error: !!username && !emailValid, helperText: !!username && !emailValid ? `Enter a valid email address: ${username}` : " ", fullWidth: true }), _jsx(Tooltip, { title: password
                     ? passwordStrength < 2
                         ? "Weak password"
                         : passwordStrength < 4
@@ -25,7 +24,7 @@ function LoginForm() {
                         ? "Min 8 chars, at least 1 letter & 1 number"
                         : " ", fullWidth: true, InputProps: {
                         endAdornment: (_jsx(InputAdornment, { position: "end", children: _jsx(IconButton, { "aria-label": "toggle password visibility", onClick: () => setShowPassword((show) => !show), edge: "end", children: showPassword ? _jsx(VisibilityOffIcon, {}) : _jsx(VisibilityIcon, {}) }) })),
-                    } }) }), password && (_jsx(LinearProgress, { variant: "determinate", "data-testid": "password-strength-bar", value: (passwordStrength / 4) * 100, sx: {
+                    } }) }), password && (_jsx(LinearProgress, { variant: "determinate", value: passwordStrength * 25, sx: {
                     width: "100%",
                     height: 8,
                     borderRadius: 5,

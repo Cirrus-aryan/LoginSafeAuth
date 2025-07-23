@@ -1,0 +1,25 @@
+declare function useLogin(): {
+    validateEmail: (email: string) => boolean;
+    validatePassword: (password: string) => boolean;
+    getPasswordStrength: (password: string) => number;
+    username: string;
+    setUsername: import("react").Dispatch<import("react").SetStateAction<string>>;
+    password: string;
+    setPassword: import("react").Dispatch<import("react").SetStateAction<string>>;
+    rememberMe: boolean;
+    setRememberMe: import("react").Dispatch<import("react").SetStateAction<boolean>>;
+    showPassword: boolean;
+    setShowPassword: import("react").Dispatch<import("react").SetStateAction<boolean>>;
+    loginEnabled: boolean;
+    setLoginEnabled: import("react").Dispatch<import("react").SetStateAction<boolean>>;
+    loading: boolean;
+    setLoading: import("react").Dispatch<import("react").SetStateAction<boolean>>;
+    emailValid: boolean;
+    setEmailValid: import("react").Dispatch<import("react").SetStateAction<boolean>>;
+    passwordValid: boolean;
+    setPasswordValid: import("react").Dispatch<import("react").SetStateAction<boolean>>;
+    passwordStrength: number;
+    setPasswordStrength: import("react").Dispatch<import("react").SetStateAction<number>>;
+    handleSubmit: (event: React.FormEvent) => void;
+};
+export default useLogin;
